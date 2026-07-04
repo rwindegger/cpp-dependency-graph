@@ -20,7 +20,7 @@ env:
 
 jobs:
   cmake:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     # These steps assume an appropriate version of vcpkg is listed as a
     # submodule in your git repo. If it is not, you must update this workflow
@@ -32,14 +32,14 @@ jobs:
           submodules: 'recursive'  
 
       - name: Bootstrap vcpkg
-        run: ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.bat
+        run: ${{ github.workspace }}/vcpkg/bootstrap-vcpkg.sh
 
       - name: Configure with CMake
         run: |
-          cmake -B build -S ${{ github.workspace }} -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}\vcpkg\scripts\buildsystems\vcpkg.cmake
+          cmake -B build -S ${{ github.workspace }} -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
 
       - name: Build with CMake
         run: cmake --build build
 
       - name: Hola, amigos
-        run: ${{ github.workspace }}\build\hola.exe
+        run: ${{ github.workspace }}/build/hola
